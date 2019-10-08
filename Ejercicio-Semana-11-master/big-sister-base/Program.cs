@@ -9,6 +9,7 @@ namespace big_sister_base
         {
             LittleGuy littleGuy = new LittleGuy();
             Market market = new Market();
+            BigSister bigSister = new BigSister();
             bool continueCycle = true;
             while (continueCycle)
             {
@@ -59,6 +60,7 @@ namespace big_sister_base
                         break;
                     case "4":
                         Console.Clear();
+                        littleGuy.Payed += bigSister.OnPayed; 
                         littleGuy.Pay();
                         littleGuy.SaveData();
                         market.SaveStorage();

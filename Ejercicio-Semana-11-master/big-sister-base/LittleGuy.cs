@@ -87,6 +87,8 @@ namespace big_sister_base
         public void AddProduct(Product product)
         {
             Cart.Products.Add(product);
+
+            OnProductAdded(product);
         }
 
         public void RemoveProduct(Product product)
@@ -94,23 +96,32 @@ namespace big_sister_base
             Cart.Products.Remove(product);
         }
 
-        public void Pay()
+        public bool Pay()
         {
-            int total = 0;
-            foreach (Product p in Cart.Products)
+            if (OnPayed())
             {
-                total += p.Price;
+                int total = 0;
+                foreach (Product p in Cart.Products)
+                {
+                    total += p.Price;
+                }
+                Console.WriteLine("El total de tu compra es: $" + total.ToString());
+                Console.Write("Este programa se cerrará en ");
+                for (int i = 5; i > 0; i--)
+                {
+                    Console.Write(i.ToString() + " ");
+                    Thread.Sleep(1000);
+                }
+                shopList = new List<Product>();
+                Generatelist();
+                Cart.Clear();
+
+                return true;
             }
-            Console.WriteLine("El total de tu compra es: $" + total.ToString());
-            Console.Write("Este programa se cerrará en ");
-            for (int i = 5; i > 0; i--)
+            else
             {
-                Console.Write(i.ToString() + " ");
-                Thread.Sleep(1000);
+                return false;
             }
-            shopList = new List<Product>();
-            Generatelist();
-            Cart.Clear();
         }
 
         public void ViewCart()
@@ -154,6 +165,32 @@ namespace big_sister_base
             fs = new FileStream(fileName, FileMode.Create);
             formatter.Serialize(fs, shopList);
             fs.Close();
+        }
+         
+        //DELEGATES AND EVENTS
+
+        public delegate bool PayedEventHandler(object source, EventArgs args);
+
+        public event PayedEventHandler Payed;
+
+        public delegate void ProductAddedEventeHandler(object source, EventArgs args);
+
+        public event ProductAddedEventeHandler ProductAdded;
+
+
+
+        protected virtual bool OnPayed()
+        {
+           return Payed(this, NewEventArgs.Empty);
+        }
+
+         
+        protected virtual void OnProductAdded(Product product)
+        {
+            if (ProductAdded != null)
+            {
+                ProductAdded(this, new NewEventArgs() { product1 = product });
+            }
         }
     }
 }
