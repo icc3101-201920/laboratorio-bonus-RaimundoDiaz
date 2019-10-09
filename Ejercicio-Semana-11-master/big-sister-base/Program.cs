@@ -11,6 +11,8 @@ namespace big_sister_base
             Market market = new Market();
             BigSister bigSister = new BigSister();
             bool continueCycle = true;
+            //littleGuy.ProductAdded += bigSister.OnProductAdded;
+            littleGuy.Payed += bigSister.OnPayed;
             while (continueCycle)
             {
                 Console.Clear();
