@@ -27,26 +27,26 @@ namespace big_sister_base
                 {
                     return false;
                 }
-                
+
             }
             return true;
         }
 
 
-        public void OnProductAdded(object source, NewEventArgs e) // no se si puse algo mal, pero creo que nunca entra a este metodo
+        public void OnProductAdded(object source, Product product) // no se si puse algo mal, pero creo que nunca entra a este metodo
         {                                                         // cuando agrrego algo al carro no imprime nada de OnProductAdded
             Console.WriteLine("Product added");                   // no pude solucionarlo.
             LittleGuy littleGuy = (LittleGuy)source;
-            Console.WriteLine(e.product1.Name);
-            if (recipe.Contains(e.product1.Name))
+            Console.WriteLine(product.Name);
+            if (recipe.Contains(product.Name))
             {
                 Console.WriteLine("consolewriteline test");
-                items.Add(e.product1);
+                items.Add(product);
             }
             else
             {
                 Console.WriteLine("That's not in the list littleguy");
-                littleGuy.RemoveProduct(e.product1);
+                littleGuy.RemoveProduct(product);
             }
         }
 

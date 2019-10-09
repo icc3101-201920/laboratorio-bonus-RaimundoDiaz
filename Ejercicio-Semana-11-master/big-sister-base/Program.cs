@@ -11,7 +11,7 @@ namespace big_sister_base
             Market market = new Market();
             BigSister bigSister = new BigSister();
             bool continueCycle = true;
-            //littleGuy.ProductAdded += bigSister.OnProductAdded;
+            littleGuy.ProductAdded += bigSister.OnProductAdded;
             littleGuy.Payed += bigSister.OnPayed;
             while (continueCycle)
             {
@@ -48,7 +48,7 @@ namespace big_sister_base
                                 Console.WriteLine("Product sin stock");
                             }
                         }
-                        
+
                         break;
                     case "3":
                         Console.Clear();
@@ -62,7 +62,7 @@ namespace big_sister_base
                         break;
                     case "4":
                         Console.Clear();
-                        littleGuy.Payed += bigSister.OnPayed; 
+                        littleGuy.Payed += bigSister.OnPayed;
                         littleGuy.Pay();
                         littleGuy.SaveData();
                         market.SaveStorage();
@@ -80,5 +80,6 @@ namespace big_sister_base
                 }
             }
         }
+
     }
 }

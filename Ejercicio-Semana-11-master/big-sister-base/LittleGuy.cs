@@ -20,7 +20,7 @@ namespace big_sister_base
                 Cart = new Cart();
                 Generatelist();
             }
-           
+
         }
 
         public Cart Cart { get => cart; private set => cart = value; }
@@ -86,8 +86,7 @@ namespace big_sister_base
 
         public void AddProduct(Product product)
         {
-            Cart.Products.Add(product);
-
+            Cart.Products.Add(product); // EL CLEAR EVITA QUE SE VEAN LOS MENSAJES EN CONSOLA pero funciona 
             OnProductAdded(product);
         }
 
@@ -126,7 +125,7 @@ namespace big_sister_base
 
         public void ViewCart()
         {
-            Console.WriteLine(Cart.ToString()); 
+            Console.WriteLine(Cart.ToString());
         }
 
 
@@ -166,14 +165,14 @@ namespace big_sister_base
             formatter.Serialize(fs, shopList);
             fs.Close();
         }
-         
+
         //DELEGATES AND EVENTS
 
         public delegate bool PayedEventHandler(object source, EventArgs args);
 
         public event PayedEventHandler Payed;
 
-        public delegate void ProductAddedEventeHandler(object source, EventArgs args);
+        public delegate void ProductAddedEventeHandler(object source, Product product);
 
         public event ProductAddedEventeHandler ProductAdded;
 
@@ -181,15 +180,15 @@ namespace big_sister_base
 
         protected virtual bool OnPayed()
         {
-           return Payed(this, NewEventArgs.Empty);
+            return Payed(this, EventArgs.Empty);
         }
 
-         
+
         protected virtual void OnProductAdded(Product product)
         {
             if (ProductAdded != null)
             {
-                ProductAdded(this, new NewEventArgs() { product1 = product });
+                ProductAdded(this, product);
             }
         }
     }
